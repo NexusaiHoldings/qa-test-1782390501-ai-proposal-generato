@@ -280,7 +280,7 @@ export async function parseRfpDocument(
  * @param filename - Original filename for extension fallback
  * @returns true if the file is acceptable
  */
-export function isValidRfpFileType(mimeType: string, filename: string): boolean {
+export async function isValidRfpFileType(mimeType: string, filename: string): Promise<boolean> {
   const acceptedMimeTypes = new Set([
     "application/pdf",
     "application/x-pdf",
@@ -299,7 +299,7 @@ export function isValidRfpFileType(mimeType: string, filename: string): boolean 
  * @param parsed - The ParsedRfp result object
  * @returns Formatted summary text
  */
-export function formatRfpSummary(parsed: ParsedRfp): string {
+export async function formatRfpSummary(parsed: ParsedRfp): Promise<string> {
   const lines: string[] = [
     `RFP Analysis Summary`,
     `====================`,
@@ -362,7 +362,7 @@ export async function parseRfpAction(formData: FormData): Promise<ParseRfpResult
     if (!(fileEntry instanceof File)) {
       return { error: "No file provided. Please select a PDF or DOCX document." };
     }
-    if (!isValidRfpFileType(fileEntry.type, fileEntry.name)) {
+    if (!(await isValidRfpFileType(fileEntry.type, fileEntry.name))) {
       return { error: "Unsupported file type. Please upload a PDF or DOCX file." };
     }
     if (fileEntry.size === 0) {
