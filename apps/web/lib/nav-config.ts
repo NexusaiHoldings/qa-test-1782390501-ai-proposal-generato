@@ -1,17 +1,36 @@
-export interface NavItem {
+export interface NavLink {
   label: string;
   href: string;
 }
 
-/**
- * Top navigation configuration consumed by the substrate <TopNav />.
- * Includes links to every feature page in the MVP scope.
- */
-export const NAV_CONFIG: NavItem[] = [
-  { label: "Home", href: "/" },
-  { label: "Conversation", href: "/conversation" },
-  { label: "Work", href: "/work" },
-  { label: "Artifacts", href: "/artifact" },
-  { label: "Approvals", href: "/approval" },
-  { label: "Direct", href: "/direct" },
-];
+export interface NavGroup {
+  label: string;
+  links: NavLink[];
+}
+
+export interface NavConfig {
+  primary: NavLink[];
+  groups: NavGroup[];
+}
+
+/** Top navigation consumed by the substrate <TopNav />. */
+export const NAV_CONFIG: NavConfig = {
+  primary: [
+    { label: "Home", href: "/" },
+    { label: "Assistant", href: "/assistant" },
+    { label: "Work", href: "/work" },
+    { label: "Approvals", href: "/approval" },
+    { label: "Artifacts", href: "/artifact" },
+  ],
+  groups: [
+    {
+      label: "Tools",
+      links: [
+        { label: "Files", href: "/files" },
+        { label: "Notifications", href: "/notifications" },
+        { label: "Support", href: "/support" },
+        { label: "Developers", href: "/developers" },
+      ],
+    },
+  ],
+};
